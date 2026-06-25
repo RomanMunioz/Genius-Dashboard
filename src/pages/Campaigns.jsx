@@ -6,12 +6,17 @@ const STATUS_BADGE = {
   pausada:  'badge-paused',
   cerrada:  'badge-closed',
   borrador: 'badge-draft',
+  active:   'badge-active',
+  paused:   'badge-paused',
+  closed:   'badge-closed',
+  draft:    'badge-draft',
 }
 
 export default function Campaigns() {
-  const [campaigns, setCampaigns] = useState([])
-  const [loading, setLoading]     = useState(true)
-  const [error, setError]         = useState(null)
+  const [campaigns, setCampaigns]       = useState([])
+  const [loading, setLoading]           = useState(true)
+  const [error, setError]               = useState(null)
+  const [clientFilter, setClientFilter] = useState('')
 
   useEffect(() => {
     getCampaigns()
@@ -20,19 +25,41 @@ export default function Campaigns() {
       .finally(() => setLoading(false))
   }, [])
 
+  const clients = [...new Set(campaigns.map(c => c.client).filter(Boolean))].sort()
+
+  const filtered = clientFilter
+    ? campaigns.filter(c => c.client === clientFilter)
+    : campaigns
+
   if (loading) return <p className="state-msg">Cargando campañas...</p>
   if (error)   return <p className="state-msg error">Error: {error.message}</p>
 
   return (
     <main className="page">
-      <h1>Campañas</h1>
-
-      {/* TODO GD-F02: agregar filtro por estado y por cliente */}
-      {/* TODO GD-F05: selector de cliente */}
+      <div className="page-toolbar">
+        <h1 style={{ margin: 0 }}>Campañas</h1>
+        <div className="toolbar-actions">
+          <select
+            className="filter-input"
+            value={clientFilter}
+            onChange={e => setClientFilter(e.target.value)}
+          >
+            <option value="">Todos los clientes</option>
+            {clients.map(c => <option key={c} value={c}>{c}</option>)}
+          </select>
+          <button className="btn-danger" onClick={() => alert('Función de crear campaña no implementada aún.')}>
+            + Nueva campaña
+          </button>
+        </div>
+      </div>
 
       <div className="item-list">
-        {campaigns.length === 0 && <p className="state-msg">No hay campañas registradas.</p>}
-        {campaigns.map(c => (
+        {filtered.length === 0 && (
+          <p className="state-msg">
+            {clientFilter ? `Sin campañas para "${clientFilter}".` : 'No hay campañas registradas.'}
+          </p>
+        )}
+        {filtered.map(c => (
           <div key={c.id} className="item-card">
             <div>
               <div className="item-name">{c.name}</div>
