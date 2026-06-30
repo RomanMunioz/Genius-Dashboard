@@ -147,8 +147,8 @@
 
 ### 5.3 Rewrite de paths
 
-- [ ] 5.3.1 `/api/budget/*` se rewritea a `/*` (se quita `/api/budget` del path)
-- [ ] 5.3.2 `/api/crm/*` se rewritea a `/*` (se quita `/api/crm` del path)
+- [✓] 5.3.1 `/api/budget/*` se rewritea a `/*` (se quita `/api/budget` del path)
+- [✓] 5.3.2 `/api/crm/*` se rewritea a `/*` (se quita `/api/crm` del path)
 
 ---
 
@@ -156,16 +156,16 @@
 
 ### 6.1 `budgetManagerApi.js`
 
-- [ ] 6.1.1 `getCampaigns({ status, client })` arma query string correctamente
-- [ ] 6.1.2 `getBudgetSummary()` llama endpoint correcto
-- [ ] 6.1.3 Los errores HTTP se propagan correctamente (no se tragan)
+- [✓] 6.1.1 `getCampaigns({ status, client })` arma query string correctamente
+- [✓] 6.1.2 `getBudgetSummary()` llama endpoint correcto
+- [✓] 6.1.3 Los errores HTTP se propagan correctamente (no se tragan)
 
 ### 6.2 `landingCrmApi.js`
 
-- [ ] 6.2.1 `getLandings({})` llama endpoint correcto
-- [ ] 6.2.2 `getLeadsSummary()` llama endpoint correcto
-- [ ] 6.2.3 `getLandingLeads(id)` llama endpoint correcto con `{id}` interpolado
-- [ ] 6.2.4 Los errores HTTP se propagan correctamente
+- [✓] 6.2.1 `getLandings({})` llama endpoint correcto
+- [✓] 6.2.2 `getLeadsSummary()` llama endpoint correcto
+- [✓] 6.2.3 `getLandingLeads(id)` llama endpoint correcto con `{id}` interpolado
+- [✓] 6.2.4 Los errores HTTP se propagan correctamente
 
 ---
 
@@ -173,15 +173,15 @@
 
 ### 7.1 Dashboard + Budget Manager
 
-- [ ] 7.1.1 Campaña creada desde Swagger de Budget → aparece en Dashboard
-- [ ] 7.1.2 Campaña actualizada → KPIs del Dashboard se reflejan al recargar
-- [ ] 7.1.3 Dashboard refleja `activeCampaigns` de campañas activas reales
+- [x] 7.1.1 Campaña creada desde Swagger de Budget → aparece en Dashboard
+- [x] 7.1.2 Campaña actualizada → KPIs del Dashboard se reflejan al recargar
+- [✓] 7.1.3 Dashboard refleja `activeCampaigns` de campañas activas reales
 
 ### 7.2 Dashboard + Landing CRM
 
-- [ ] 7.2.1 Landing creada desde Swagger de CRM → aparece en Dashboard
-- [ ] 7.2.2 Lead registrado en CRM → `leadCount` se incrementa en Dashboard
-- [ ] 7.2.3 Dashboard refleja todos los clients (SueñoSimple, TechStore)
+- [x] 7.2.1 Landing creada desde Swagger de CRM → aparece en Dashboard
+- [x] 7.2.2 Lead registrado en CRM → `leadCount` se incrementa en Dashboard
+- [✓] 7.2.3 Dashboard refleja todos los clients (SueñoSimple, TechStore)
 
 ### 7.3 Dashboard + Genius-Landings admin
 
