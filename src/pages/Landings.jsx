@@ -2,9 +2,14 @@ import { useEffect, useState } from 'react'
 import { getLandings } from '../services/landingCrmApi'
 
 const STATUS_BADGE = {
-  activa:   'badge-active',
-  inactiva: 'badge-closed',
-  borrador: 'badge-draft',
+  activa:    'badge-active',
+  active:    'badge-active',
+  inactiva:  'badge-closed',
+  inactive:  'badge-closed',
+  borrador:  'badge-draft',
+  draft:     'badge-draft',
+  pausada:   'badge-paused',
+  paused:    'badge-paused',
 }
 
 export default function Landings() {
