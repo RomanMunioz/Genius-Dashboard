@@ -44,7 +44,7 @@
 - [x] 2.1.1 Al montar, llama `getBudgetSummary()` vía proxy → `GET /api/budget/campaigns/summary`
 - [✓] 2.1.2 Al montar, llama `getLeadsSummary()` vía proxy → `GET /api/crm/landings/summary`
 - [x] 2.1.3 Ambas llamadas se ejecutan en paralelo (`Promise.all`)
-- [x] 2.1.4 Mientras carga, muestra **"Cargando..."**
+- [✓] 2.1.4 Mientras carga, muestra **"Cargando..."**
 
 ### 2.2 KPIs — Budget Manager
 
@@ -73,7 +73,7 @@
 ### 3.1 Carga de datos
 
 - [✓] 3.1.1 Al montar, llama `getCampaigns()` vía proxy → `GET /api/budget/campaigns`
-- [x] 3.1.2 Mientras carga, muestra **"Cargando..."**
+- [✓] 3.1.2 Mientras carga, muestra **"Cargando..."**
 - [✓] 3.1.3 Error al cargar → mensaje de error visible
 
 ### 3.2 Listado de campañas
@@ -103,7 +103,7 @@
 ### 4.1 Carga de datos
 
 - [✓] 4.1.1 Al montar, llama `getLandings()` vía proxy → `GET /api/crm/landings`
-- [x] 4.1.2 Mientras carga, muestra **"Cargando..."**
+- [✓] 4.1.2 Mientras carga, muestra **"Cargando..."**
 - [✓] 4.1.3 Error al cargar → mensaje de error visible
 
 ### 4.2 Listado de landings
