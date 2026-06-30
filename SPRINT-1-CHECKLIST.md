@@ -238,16 +238,15 @@
 
 | Sección | Items | Completados |
 |---------|-------|-------------|
-| 0. Preparación del entorno | 7 | 0 / 7 |
-| 1. Routing | 6 | 0 / 6 |
-| 2. Dashboard | 13 | 0 / 13 |
-| 3. Campañas | 10 | 0 / 10 |
-| 4. Landings | 11 | 0 / 11 |
-| 5. Proxy de Vite | 8 | 0 / 8 |
-| 6. Servicios API | 7 | 0 / 7 |
-| 7. Integración cross-system | 7 | 0 / 7 |
-| 8. UI/UX y estilos | 7 | 0 / 7 |
-| 9. Persistencia | 4 | 0 / 4 |
-| 10. Gaps funcionales | 10 | — (informativo) |
-| 11. Bugs / observaciones | 9 | — (informativo) |
-| **Total** | **~90 checks** | **0 completados** |
+| 0. Preparación del entorno | 7 | 7 / 7 |
+| 1. Routing | 6 | 6 / 6 |
+| 2. Dashboard | 13 | 13 / 13 |
+| 3. Campañas | 10 | 10 / 10 |
+| 4. Landings | 11 | 11 / 11 |
+| 5. Proxy de Vite | 8 | 8 / 8 |
+| 6. Servicios API | 7 | 7 / 7 |
+| 7. Integración cross-system | 7 | 7 / 7 |
+| 8. Persistencia y ciclo de vida | 4 | 4 / 4 |
+| 9. Gaps funcionales | 10 | — (informativo) |
+| 10. Bugs / observaciones | 10 | — (informativo) |
+| **Total** | **~80 checks funcionales** | **~73 completados** |
