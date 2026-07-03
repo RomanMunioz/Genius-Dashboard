@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getCampaigns, updateCampaign, updateCampaignStatus } from '../services/budgetManagerApi'
+import { createCampaign, getCampaigns, updateCampaign, updateCampaignStatus } from '../services/budgetManagerApi'
 
 const STATUS_BADGE = {
   activa:   'badge-active',  active:  'badge-active',
@@ -9,13 +9,13 @@ const STATUS_BADGE = {
 }
 
 const STATUS_OPTIONS = [
-  { value: 'active',  label: 'Activa'    },
-  { value: 'paused',  label: 'Pausada'   },
-  { value: 'closed',  label: 'Finalizada'},
-  { value: 'draft',   label: 'Borrador'  },
+  { value: 'active',  label: 'Activo'     },
+  { value: 'paused',  label: 'Pausado'    },
+  { value: 'closed',  label: 'Finalizado' },
 ]
 
 const EMPTY_EDIT = { name: '', client: '', type: '', status: '', budget: '', currency: '', startDate: '', endDate: '' }
+const EMPTY_CREATE = { name: '', client: '', budget: '', status: 'active', availableBudget: '', spentBudget: '' }
 
 function statusColor(s) {
   if (s === 'active'  || s === 'activa')   return '#198754'
@@ -34,6 +34,10 @@ export default function Campaigns() {
   const [savingStatus, setSavingStatus] = useState(null)
   const [saving, setSaving]             = useState(false)
   const [editError, setEditError]       = useState(null)
+  const [showCreateForm, setShowCreateForm] = useState(false)
+  const [createForm, setCreateForm]     = useState(EMPTY_CREATE)
+  const [creating, setCreating]         = useState(false)
+  const [createError, setCreateError]   = useState(null)
 
   useEffect(() => {
     getCampaigns()
@@ -61,6 +65,10 @@ export default function Campaigns() {
     setEditForm(f => ({ ...f, [e.target.name]: e.target.value }))
   }
 
+  function handleCreateField(e) {
+    setCreateForm(f => ({ ...f, [e.target.name]: e.target.value }))
+  }
+
   async function handleStatusChange(id, newStatus) {
     setSavingStatus(id)
     try {
@@ -86,6 +94,33 @@ export default function Campaigns() {
     }
   }
 
+  async function handleCreateSubmit(e) {
+    e.preventDefault()
+    setCreateError(null)
+    setCreating(true)
+    try {
+      if (!createForm.client.trim()) throw new Error('El cliente es obligatorio')
+      if (!createForm.budget) throw new Error('El presupuesto asignado es obligatorio')
+
+      const created = await createCampaign({
+        name: createForm.name.trim() || createForm.client.trim(),
+        client: createForm.client.trim(),
+        budget: Number(createForm.budget),
+        status: createForm.status,
+        availableBudget: Number(createForm.availableBudget) || 0,
+        spentBudget: Number(createForm.spentBudget) || 0,
+      })
+
+      setCampaigns(prev => [created, ...prev])
+      setCreateForm(EMPTY_CREATE)
+      setShowCreateForm(false)
+    } catch (err) {
+      setCreateError(err.message)
+    } finally {
+      setCreating(false)
+    }
+  }
+
   if (loading) return <p className="state-msg">Cargando campañas...</p>
   if (error)   return <p className="state-msg error">Error: {error.message}</p>
 
@@ -98,11 +133,56 @@ export default function Campaigns() {
             <option value="">Todos los clientes</option>
             {clients.map(c => <option key={c} value={c}>{c}</option>)}
           </select>
-          <button className="btn-danger" onClick={() => alert('Función de crear campaña no implementada aún.')}>
-            + Nueva campaña
+          <button
+            className="btn-danger"
+            onClick={() => {
+              setShowCreateForm(prev => {
+                const next = !prev
+                if (next) {
+                  setCreateForm(EMPTY_CREATE)
+                  setCreateError(null)
+                }
+                return next
+              })
+            }}
+          >
+            {showCreateForm ? 'Cancelar' : '+ Nueva campaña'}
           </button>
         </div>
       </div>
+
+      {showCreateForm && (
+        <form className="form-card" onSubmit={handleCreateSubmit}>
+          <h2>Crear campaña</h2>
+          {createError && <p className="form-error">{createError}</p>}
+          <div className="form-grid">
+            <label>Nombre de campaña
+              <input name="name" value={createForm.name} onChange={handleCreateField} placeholder="Ej. Campaña verano" />
+            </label>
+            <label>Cliente *
+              <input name="client" value={createForm.client} onChange={handleCreateField} required placeholder="Ej. SueñoSimple" />
+            </label>
+            <label>Presupuesto asignado *
+              <input name="budget" type="number" min="0" value={createForm.budget} onChange={handleCreateField} required placeholder="0" />
+            </label>
+            <label>Estado
+              <select name="status" value={createForm.status} onChange={handleCreateField}>
+                {STATUS_OPTIONS.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+              </select>
+            </label>
+            <label>Presupuesto disponible
+              <input name="availableBudget" type="number" min="0" value={createForm.availableBudget} onChange={handleCreateField} placeholder="0" />
+            </label>
+            <label>Presupuesto gastado
+              <input name="spentBudget" type="number" min="0" value={createForm.spentBudget} onChange={handleCreateField} placeholder="0" />
+            </label>
+          </div>
+          <div className="edit-actions">
+            <button type="submit" className="btn-primary" disabled={creating}>{creating ? 'Creando…' : 'Crear campaña'}</button>
+            <button type="button" className="btn-secondary" onClick={() => { setShowCreateForm(false); setCreateError(null); setCreateForm(EMPTY_CREATE) }}>Cancelar</button>
+          </div>
+        </form>
+      )}
 
       <div className="item-list">
         {filtered.length === 0 && (
